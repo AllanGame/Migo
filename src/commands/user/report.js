@@ -32,6 +32,14 @@ module.exports = class ReportCommand extends Command {
   async execute(interaction) {
     const reportedUser = interaction.options.getUser("reportado");
     const client = interaction.client;
+
+    if (reportedUser.id === interaction.user.id) {
+      return interaction.reply({
+        content: "No puedes reportarte a ti mismo!",
+        ephemeral: true,
+      });
+    }
+
     let reportId = parseInt(client.config.lastReportId) + 1;
 
     config.lastReportId = reportId;
